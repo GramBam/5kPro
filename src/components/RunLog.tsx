@@ -41,7 +41,7 @@ function RunLog() {
         <div className='entry-form'>
           <div className='form-inputs'>
             <input type='date' id='date' onChange={inputChange}></input>
-            <input type='number' id='speed' onChange={inputChange} min={1} max={12} ></input>mph
+            <input type='number' id='speed' onChange={inputChange} min={1} max={12} maxLength={2} ></input>mph
           </div>
           <div className='form-buttons'>
             <button onClick={submitEntry}>Submit</button>
