@@ -1,5 +1,4 @@
 import Nav from "./components/Nav";
-import RunLog from "./components/RunLog";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
 import Calculator from "./pages/Calculator";

@@ -135,6 +135,10 @@ body {
   padding: 15px;
 }
 
+.inputs-title {
+  font-weight: bold;
+}
+
 .input-row {
   display: flex;
   flex-direction: row;
@@ -147,6 +151,16 @@ body {
 .input-row input {
   text-align: center;
   width: 35px;
+}
+
+.input-row p {
+  margin: 0;
+}
+
+.input-row div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .button-row {
@@ -243,4 +257,19 @@ input:checked+.slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.answer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.answer p {
+  margin: 5px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
 }
