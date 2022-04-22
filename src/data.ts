@@ -1,5 +1,5 @@
 export const runs: { date: string, speed: number }[] = [
-  { date: 'April 6 2022', speed: 7.2 },
-  { date: 'April 14 2022', speed: 7.5 },
-  { date: 'April 20 2022', speed: 8 }
+  { date: '2022-04-12', speed: 7.2 },
+  { date: '2022-04-03', speed: 7.5 },
+  { date: '2022-03-18', speed: 8 }
 ]
