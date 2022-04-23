@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, useState } from "react"
+import { ChangeEvent, useState } from "react"
 import UnitSlider from "../components/UnitSlider";
 
 function Calculator() {
@@ -14,6 +14,7 @@ function Calculator() {
 
   const calcChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setCalcType(e.target.value)
+    clearInputs()
   }
 
   const timeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,10 +39,18 @@ function Calculator() {
 
 
   const calculate = () => {
-    let t: number = ((time.hours * 3600) + (time.minutes * 60) + time.seconds) / distance
+
+    let t: number = 0
+
+    switch (calcType) {
+      case 'pace': t = ((time.hours * 3600) + (time.minutes * 60) + time.seconds) / distance; break;
+      case 'time': t = (time.minutes * 60 + time.seconds) * distance; break;
+    }
+
     let h: number = Math.floor(t / 3600)
     let m: number = Math.floor(t % 3600 / 60)
     let s: number = Math.floor(t % 3600 % 60)
+    console.log((time.minutes * 60 + time.seconds) * distance);
 
     setAnswer(h === 0 ? formatTime(m) + ':' + formatTime(s) : formatTime(h, true) + ':' + formatTime(m) + ':' + formatTime(s))
   }
@@ -64,31 +73,59 @@ function Calculator() {
         <UnitSlider callback={unitChange} />
       </div>
 
-      <div className="calc-inputs">
-        <p className="inputs-title">Time</p>
-        <div className="input-row">
-          <div>
-            <input maxLength={2} placeholder="hr" value={time.hours} id="hours" onChange={timeInputChange} />
-            <p>Hrs</p>
+      {
+        (calcType === 'pace' || calcType === 'distance') && (
+          <div className="calc-inputs">
+            <p className="inputs-title">Time</p>
+            <div className="input-row">
+              <div>
+                <input maxLength={2} placeholder="hr" value={time.hours} id="hours" onChange={timeInputChange} />
+                <p>Hrs</p>
+              </div>
+              <div>
+                <input maxLength={2} placeholder="min" value={time.minutes} id="minutes" onChange={timeInputChange} />
+                <p>Mins</p>
+              </div>
+              <div>
+                <input maxLength={2} placeholder="sec" value={time.seconds} id="seconds" onChange={timeInputChange} />
+                <p>Secs</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <input maxLength={2} placeholder="min" value={time.minutes} id="minutes" onChange={timeInputChange} />
-            <p>Mins</p>
-          </div>
-          <div>
-            <input maxLength={2} placeholder="sec" value={time.seconds} id="seconds" onChange={timeInputChange} />
-            <p>Secs</p>
-          </div>
-        </div>
-      </div>
+        )
+      }
 
-      <div className="calc-inputs">
-        <p className="inputs-title">Distance</p>
-        <div className="input-row">
-          <input value={distance} style={{ width: '50px' }} maxLength={2} placeholder="distance" onChange={distInputChange} />
-          <p>{miles ? 'miles' : 'kilometers'}</p>
-        </div>
-      </div>
+      {
+        (calcType === 'distance' || calcType === 'time') && (
+          <div className="calc-inputs">
+            <p className="inputs-title">Pace</p>
+            <div className="input-row">
+              <div>
+                <input maxLength={2} placeholder="min" value={time.minutes} id="minutes" onChange={timeInputChange} />
+                <p>Mins</p>
+              </div>
+              <div>
+                <input maxLength={2} placeholder="sec" value={time.seconds} id="seconds" onChange={timeInputChange} />
+                <p>Secs</p>
+              </div>
+              <p>{miles ? 'per mile' : 'per kilometer'}</p>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        (calcType === 'pace' || calcType === 'time') && (
+          <div className="calc-inputs">
+            <p className="inputs-title">Distance</p>
+            <div className="input-row">
+              <input value={distance} style={{ width: '50px' }} maxLength={2} placeholder="distance" onChange={distInputChange} />
+              <p>{miles ? 'miles' : 'kilometers'}</p>
+            </div>
+          </div>
+        )
+      }
+
 
       <div className="button-row">
         <button onClick={calculate}>Calculate</button>
@@ -96,9 +133,15 @@ function Calculator() {
       </div>
 
       {answer !== '' &&
-        <div className="answer">
-          <p className="inputs-title">Pace per {miles ? 'mile' : 'kilometer'}</p>
-          <p>{answer}</p>
+        <div className="answer-container">
+          {
+            calcType === 'pace' && <p className="inputs-title">Pace per {miles ? 'mile' : 'kilometer'}</p>
+          }
+          {
+            calcType === 'time' && <p className="inputs-title">Time</p>
+          }
+
+          <p className="answer">{answer}</p>
         </div>
       }
 

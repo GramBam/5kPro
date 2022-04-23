@@ -142,7 +142,7 @@ body {
 .input-row {
   display: flex;
   flex-direction: row;
-  width: 150px;
+  width: 200px;
   justify-content: space-evenly;
   max-height: 20px;
   align-items: center;
@@ -259,14 +259,19 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
-.answer {
+.answer-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.answer p {
+.answer-container p {
   margin: 5px;
+}
+
+.answer {
+  font-size: 32px;
+  letter-spacing: 4px;
 }
 
 .title {
