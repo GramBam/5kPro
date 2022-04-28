@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/entries', require('./routes/entryRoutes'))
 
 app.use(errorHandler)
 
