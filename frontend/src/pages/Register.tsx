@@ -1,30 +1,28 @@
-import React, { FormEventHandler, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' })
 
   const { name, email, password, password2 } = formData
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const navigate = useNavigate();
+
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
   }
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault()
 
     if (password !== password2) {
-      throw new Error('Passwords do not match')
-    } else {
-      const userData = {
-        name,
-        email,
-        password
-      }
-
+      alert('Passwords do not match')
     }
+
   }
 
   return (
