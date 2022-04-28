@@ -1,15 +1,29 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../features/auth/authSlice";
+import { login, reset } from "../features/auth/authSlice";
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '', })
 
   const { email, password } = formData
-  const dispatch = useDispatch()
 
-  const { user, isLoading, isSuccess, message } = useSelector((state: RootStateOrAny) => state.auth)
+  const dispatch = useDispatch()
+  const nav = useNavigate()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootStateOrAny) => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      alert(message)
+    }
+
+    if (isSuccess || user) {
+      nav('/')
+    }
+
+    dispatch(reset())
+  }, [isError, isSuccess, user, message, nav, dispatch])
 
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
