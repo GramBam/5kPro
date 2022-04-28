@@ -1,11 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from "react"
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login } from "../features/auth/authSlice";
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '', })
 
   const { email, password } = formData
+  const dispatch = useDispatch()
 
+  const { user, isLoading, isSuccess, message } = useSelector((state: RootStateOrAny) => state.auth)
 
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +21,13 @@ function Login() {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
+
+    const userData = {
+      email,
+      password
+    }
+
+    dispatch((login as (user: {}) => void)(userData))
   }
 
   return (

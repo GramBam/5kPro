@@ -1,12 +1,29 @@
-import { ChangeEvent, FormEvent, useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState, useEffect } from "react"
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
+import { useNavigate } from "react-router-dom"
+import { register, reset } from '../features/auth/authSlice'
 
 function Register() {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' })
 
   const { name, email, password, password2 } = formData
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const nav = useNavigate()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootStateOrAny) => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      alert(message)
+    }
+
+    if (isSuccess || user) {
+      nav('/')
+    }
+
+    dispatch(reset())
+  }, [isError, isSuccess, user, message, nav, dispatch])
 
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +38,13 @@ function Register() {
 
     if (password !== password2) {
       alert('Passwords do not match')
+    } else {
+      const userData = {
+        name,
+        email,
+        password
+      }
+      dispatch((register as (user: {}) => void)(userData))
     }
 
   }

@@ -5,8 +5,9 @@ function Nav() {
     <div className="nav">
       <Link to="/" className="header">5kPro</Link>
       <div className='nav-buttons'>
-        <Link to="/" className="btn btn-ghost btn-sm rounded-btn">Home</Link>
-        <Link to="/calculator" className="btn btn-ghost btn-sm rounded-btn">Pace Calculator</Link>
+        <Link to="/login">Login</Link>
+        <Link to="/register">Register</Link>
+        <Link to="/calculator">Pace Calculator</Link>
       </div>
     </div>
   )
