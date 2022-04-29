@@ -44,7 +44,7 @@ function Register() {
         email,
         password
       }
-      dispatch((register as (user: {}) => void)(userData))
+      dispatch((register as (user: { name: string, email: string, password: string }) => void)(userData))
     }
 
   }
