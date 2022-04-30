@@ -1,12 +1,9 @@
-import { ChangeEvent, MouseEvent, useState } from 'react'
+import { useState } from 'react'
 import { runs } from '../data'
 import Entry from './Entry'
 
 function RunLog() {
-  const [entrySpeed, setEntrySpeed] = useState(5)
-  const [entryDate, setEntryDate] = useState('')
   const [entries, setEntries] = useState([...runs])
-
 
   return (
     <div className="log">

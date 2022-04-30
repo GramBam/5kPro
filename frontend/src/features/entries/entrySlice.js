@@ -27,7 +27,8 @@ export const entrySlice = createSlice({
     reset: (state) => initialState
   },
   extraReducers: (builder) => {
-    builder.addCase(createEntry.pending, (state) => state.isLoading = true)
+    builder
+      .addCase(createEntry.pending, (state) => { state.isLoading = true })
       .addCase(createEntry.fulfilled, (state) => {
         state.isLoading = false
         state.isSuccess = true
