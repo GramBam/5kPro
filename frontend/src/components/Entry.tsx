@@ -4,7 +4,6 @@ interface EntryProps {
 }
 
 function Entry({ date, speed }: EntryProps) {
-
   const getTime = (x: number) => {
     let minutes = x % 60;
     let minutesString = minutes.toString().split('.')[0]

@@ -1,32 +1,16 @@
 import RunLog from "../components/RunLog"
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { createEntry, reset } from "../features/entries/entrySlice";
 
 function Home() {
   const { user } = useSelector((state: RootStateOrAny) => state.auth)
-  const { isError, isSuccess, message } = useSelector((state: RootStateOrAny) => state.entries)
 
   const [submitting, setSubmitting] = useState(false)
   const [date, setDate] = useState('')
   const [speed, setSpeed] = useState(0)
 
   const dispatch = useDispatch()
-  const nav = useNavigate()
-
-  useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }
-
-    if (isSuccess) {
-      dispatch(reset())
-      nav('/')
-    }
-
-    dispatch(reset())
-  }, [dispatch, isError, isSuccess, nav, message])
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
